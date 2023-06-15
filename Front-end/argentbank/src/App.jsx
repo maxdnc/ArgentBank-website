@@ -1,12 +1,11 @@
 // style
-import "./App.css";
 
 //route
 import Routes from "./routes";
 
 function App() {
   return (
-    <div className="App">
+    <div className="font-avenir text-primary">
       <Routes />
     </div>
   );

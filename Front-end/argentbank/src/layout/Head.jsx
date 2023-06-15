@@ -1,18 +1,29 @@
 import { Link } from "react-router-dom";
+import logoArgentBank from "../assets/argentBankLogo.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 
 const Head = () => {
   return (
-    <header className="bg-gray-800">
-      <nav className="mx-auto flex max-w-4xl items-center justify-between p-4">
+    <header>
+      <nav className="flex items-center justify-between px-[20px] py-[5px]">
         <div className="flex items-center">
-          {/* Insérez ici votre code pour le logo */}
-          <Link to="/" className="text-xl font-bold text-white">
-            Logo
+          <Link to="/" className="">
+            <h1>
+              <img
+                src={logoArgentBank}
+                alt="logo Argent Bank"
+                className="w-[200px] max-w-full"
+              />
+            </h1>
           </Link>
         </div>
-        <div className="flex items-center space-x-4">
-          {/* Insérez ici vos liens de navigation */}
-          <Link to="/signin" className="text-white hover:text-gray-300">
+        <div className="flex items-center gap-1.5">
+          <FontAwesomeIcon icon={faCircleUser} />
+          <Link
+            to="/signin"
+            className="mr-2 whitespace-nowrap font-bold hover:underline"
+          >
             Sign In
           </Link>
         </div>
