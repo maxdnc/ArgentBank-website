@@ -22,7 +22,7 @@ const Head = () => {
           <FontAwesomeIcon icon={faCircleUser} />
           <Link
             to="/signin"
-            className="mr-2 whitespace-nowrap font-bold hover:underline"
+            className="mr-2 whitespace-nowrap font-semibold hover:underline"
           >
             Sign In
           </Link>

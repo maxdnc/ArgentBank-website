@@ -1,5 +1,3 @@
-// style
-
 //route
 import Routes from "./routes";
 
