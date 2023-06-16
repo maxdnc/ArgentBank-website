@@ -5,11 +5,19 @@ import FeatureItem from "../components/FeatureItem";
 import iconChat from "../assets/icon-chat.png";
 import iconMoney from "../assets/icon-money.png";
 import iconSecurity from "../assets/icon-security.png";
+// banner
+import bannerImg from "../assets/bank-tree.jpeg";
 
 const Home = () => {
   return (
     <>
-      <Banner />
+      <Banner
+        bannerImg={bannerImg}
+        titleA="No fees."
+        titleB="No minimum deposit."
+        titleC="High interest rates."
+        textA="Open a savings account with Argent Bank today!"
+      />
       <section className="flex flex-col">
         <FeatureItem
           iconFeature={iconChat}

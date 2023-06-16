@@ -6,9 +6,9 @@ const FeatureItem = ({ iconFeature, titleFeature, descriptionFeature }) => {
         alt="Chat Icon"
         className="box-content w-[100px] rounded-full border-[10px] border-secondary p-4"
       />
-      <h2 className="mb-2 mt-4 text-center text-xl font-bold">
+      <h3 className="mb-2 mt-4 text-center text-xl font-bold">
         {titleFeature}
-      </h2>
+      </h3>
       <p className="mt my-[1em] text-center font-light">{descriptionFeature}</p>
     </article>
   );
