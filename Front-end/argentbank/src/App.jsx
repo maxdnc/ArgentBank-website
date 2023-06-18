@@ -3,7 +3,7 @@ import Routes from "./routes";
 
 function App() {
   return (
-    <div className="font-avenir text-primary">
+    <div>
       <Routes />
     </div>
   );

@@ -6,7 +6,7 @@ const Banner = ({ bannerImg, titleA, titleB, titleC, textA }) => {
         alt="banner"
         className="object-[0 -50px] h-full w-full object-cover"
       />
-      <section className="absolute left-[50%] top-8 box-content flex max-w-[200px] translate-x-[-50%] items-center justify-center bg-white p-8">
+      <section className="absolute left-[50%] top-8 box-content flex w-[200px] translate-x-[-50%] items-center justify-center bg-white p-8">
         <div className="">
           <h2 className="font-bold">{titleA}</h2>
           <h2 className="font-bold">{titleB}</h2>
