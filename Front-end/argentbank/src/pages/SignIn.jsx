@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 // import react-router-dom
 import { useNavigate } from "react-router-dom";
+
 // import react
 import { useState } from "react";
 // import redux RTK Query
@@ -22,13 +23,13 @@ const SignIn = () => {
 
   // handle submit
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     getToken({ email, password })
       .unwrap() // Récupère le résultat du token de la promesse
       .then((data) => {
         const token = data.body.token;
-        Cookies.set("token", token);
+        Cookies.set("token", token, { expires: 1 });
         navigate("/users");
         setErrorMessage("");
       })
