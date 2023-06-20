@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 // import redux RTK Query
 import { useGetTokenMutation } from "../features/api/apiSlice";
+// import redux
+import { useDispatch } from "react-redux";
+import { setLoggedIn } from "../features/auth/authSlice";
 // cookies
 import Cookies from "js-cookie";
 
@@ -21,8 +24,9 @@ const SignIn = () => {
   // call api
   const [getToken, { isLoading, isError }] = useGetTokenMutation();
 
-  // handle submit
+  const dispatch = useDispatch();
 
+  // handle submit
   const handleSubmit = (e) => {
     e.preventDefault();
     getToken({ email, password })
@@ -32,6 +36,7 @@ const SignIn = () => {
         Cookies.set("token", token, { expires: 1 });
         navigate("/users");
         setErrorMessage("");
+        dispatch(setLoggedIn(true));
       })
       .catch((error) => {
         setShakingAnimation(true);

@@ -5,28 +5,21 @@ import logoArgentBank from "../assets/argentBankLogo.png";
 // fontawesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
-// react
-import { useEffect, useState } from "react";
 
+//redux
+import { useSelector } from "react-redux";
+import { setLoggedIn } from "../features/auth/authSlice";
+import { useDispatch } from "react-redux";
 // cookies
 import Cookies from "js-cookie";
 
 const Head = () => {
-  const token = Cookies.get("token");
-
-  const [isLogged, setIsLogged] = useState(token ? true : false);
-
-  useEffect(() => {
-    if (token) {
-      setIsLogged(true);
-    } else {
-      setIsLogged(false);
-    }
-  }, [token]);
+  const loggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
     Cookies.remove("token");
-    setIsLogged(false);
+    dispatch(setLoggedIn(false));
     console.log("logout");
   };
 
@@ -46,7 +39,7 @@ const Head = () => {
         </div>
         <div className="flex items-center gap-1.5">
           <FontAwesomeIcon icon={faCircleUser} />
-          {isLogged ? (
+          {loggedIn ? (
             <Link to="/" onClick={handleLogout}>
               Log Out
             </Link>

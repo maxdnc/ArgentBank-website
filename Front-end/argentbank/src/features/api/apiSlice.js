@@ -5,6 +5,7 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3001/api/v1/",
   }),
+  tagTypes: ["User"],
   endpoints: (builder) => ({
     getToken: builder.mutation({
       query: (user) => ({
@@ -12,6 +13,7 @@ export const apiSlice = createApi({
         method: "POST",
         body: user,
       }),
+      invalidatesTags: ["User"],
     }),
   }),
 });
