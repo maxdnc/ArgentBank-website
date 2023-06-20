@@ -8,9 +8,12 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 // import redux RTK Query
 import { useGetTokenMutation } from "../features/api/apiSlice";
+import { usePostProfileMutation } from "../features/api/apiSlice";
 // import redux
 import { useDispatch } from "react-redux";
 import { setLoggedIn } from "../features/auth/authSlice";
+import { setUserProfile } from "../features/auth/userProfileSlice";
+
 // cookies
 import Cookies from "js-cookie";
 
@@ -23,6 +26,7 @@ const SignIn = () => {
 
   // call api
   const [getToken, { isLoading, isError }] = useGetTokenMutation();
+  const [postProfile] = usePostProfileMutation();
 
   const dispatch = useDispatch();
 
@@ -37,6 +41,15 @@ const SignIn = () => {
         navigate("/users");
         setErrorMessage("");
         dispatch(setLoggedIn(true));
+      })
+      .then(() => {
+        const token = Cookies.get("token");
+        postProfile(token)
+          .unwrap()
+          .then((data) => {
+            console.log(data);
+            dispatch(setUserProfile(data.body));
+          });
       })
       .catch((error) => {
         setShakingAnimation(true);

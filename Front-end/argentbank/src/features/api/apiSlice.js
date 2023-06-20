@@ -15,7 +15,16 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["User"],
     }),
+    postProfile: builder.mutation({
+      query: (token) => ({
+        url: "user/profile",
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useGetTokenMutation } = apiSlice;
+export const { useGetTokenMutation, usePostProfileMutation } = apiSlice;
