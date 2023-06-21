@@ -23,8 +23,24 @@ export const apiSlice = createApi({
           Authorization: `Bearer ${token}`,
         },
       }),
+      invalidatesTags: ["User"],
+    }),
+    putNewUserName: builder.mutation({
+      query: (user) => ({
+        url: "user/profile",
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: { userName: user.userName },
+      }),
+      invalidatesTags: ["User"],
     }),
   }),
 });
 
-export const { useGetTokenMutation, usePostProfileMutation } = apiSlice;
+export const {
+  useGetTokenMutation,
+  usePostProfileMutation,
+  usePutNewUserNameMutation,
+} = apiSlice;

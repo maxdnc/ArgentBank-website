@@ -4,8 +4,11 @@ import { Link } from "react-router-dom";
 import logoArgentBank from "../assets/argentBankLogo.png";
 // fontawesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
-import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleUser,
+  faArrowRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
+
 // react
 import { useEffect } from "react";
 //redux
@@ -20,14 +23,12 @@ const Head = () => {
   const token = useSelector((state) => state.auth.isLoggedIn);
   const userProfile = useSelector((state) => state.userProfile);
   const [postProfile] = usePostProfileMutation();
-  console.log(token);
 
   useEffect(() => {
     if (token) {
       postProfile(token)
         .unwrap()
         .then((data) => {
-          console.log(data);
           dispatch(setUserProfile(data.body));
         });
     }
@@ -35,7 +36,6 @@ const Head = () => {
 
   const handleLogout = () => {
     dispatch(setLoggedOut());
-    dispatch(setUserProfile(""));
   };
 
   return (
@@ -60,7 +60,7 @@ const Head = () => {
                 className="mr-4 whitespace-nowrap font-semibold hover:underline"
               >
                 <FontAwesomeIcon icon={faCircleUser} className="mr-2" />{" "}
-                {userProfile && userProfile.userName}
+                {userProfile.userName}
               </Link>
               <Link
                 to="/"

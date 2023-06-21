@@ -1,10 +1,13 @@
 // component
 import TransactionItem from "../components/TransactionItem";
+import ChangeUserName from "../components/ChangeUserName";
 // redux
 import { useSelector } from "react-redux";
+import { usePostProfileMutation } from "../features/api/apiSlice";
 
 const Users = () => {
   const userProfile = useSelector((state) => state.userProfile);
+
 
   return (
     <div className=" bg-tertiary py-8">
@@ -15,9 +18,7 @@ const Users = () => {
         <p className="text-center text-[2em] font-semibold text-white">
           {userProfile.firstName} {userProfile.lastName} !
         </p>
-        <button className="mt-4 border-2 border-b-green-800 border-l-secondary border-r-green-800 border-t-secondary bg-secondary p-[10px] text-sm font-bold text-white duration-150 ease-in-out hover:border-b-secondary hover:border-l-green-800 hover:border-r-secondary hover:border-t-green-800">
-          Edit Name
-        </button>
+        <ChangeUserName />
       </section>
       <TransactionItem
         operation="Argent Bank Checking (x8349)"
