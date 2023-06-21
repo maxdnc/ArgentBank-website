@@ -13,9 +13,6 @@ import { useGetTokenMutation } from "../features/api/apiSlice";
 import { useDispatch } from "react-redux";
 import { setLoggedIn } from "../features/auth/authSlice";
 
-// cookies
-import Cookies from "js-cookie";
-
 const SignIn = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -35,7 +32,6 @@ const SignIn = () => {
       .unwrap() // Récupère le résultat du token de la promesse
       .then((data) => {
         const token = data.body.token;
-        Cookies.set("token", token, { expires: 1 });
         setErrorMessage("");
         dispatch(setLoggedIn(token));
         navigate("/users");

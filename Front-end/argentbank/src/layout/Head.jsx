@@ -15,9 +15,6 @@ import { setLoggedIn, setLoggedOut } from "../features/auth/authSlice";
 import { setUserProfile } from "../features/auth/userProfileSlice";
 import { usePostProfileMutation } from "../features/api/apiSlice";
 
-// cookies
-import Cookies from "js-cookie";
-
 const Head = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.isLoggedIn);
@@ -37,8 +34,8 @@ const Head = () => {
   }, [token]);
 
   const handleLogout = () => {
-    Cookies.remove("token");
     dispatch(setLoggedOut());
+    dispatch(setUserProfile(""));
   };
 
   return (
@@ -63,7 +60,7 @@ const Head = () => {
                 className="mr-4 whitespace-nowrap font-semibold hover:underline"
               >
                 <FontAwesomeIcon icon={faCircleUser} className="mr-2" />{" "}
-                {userProfile && userProfile.firstName}
+                {userProfile && userProfile.userName}
               </Link>
               <Link
                 to="/"
