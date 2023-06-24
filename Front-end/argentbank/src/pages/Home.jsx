@@ -18,7 +18,7 @@ const Home = () => {
         titleC="High interest rates."
         textA="Open a savings account with Argent Bank today!"
       />
-      <section className="flex flex-col">
+      <section className="flex flex-col md:flex-row">
         <FeatureItem
           iconFeature={iconChat}
           titleFeature="You are our #1 priority"

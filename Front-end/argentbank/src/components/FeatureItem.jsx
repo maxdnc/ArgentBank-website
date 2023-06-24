@@ -1,6 +1,6 @@
 const FeatureItem = ({ iconFeature, titleFeature, descriptionFeature }) => {
   return (
-    <article className="flex flex-1 flex-col items-center justify-center p-10">
+    <article className="flex flex-1 flex-col items-center p-10">
       <img
         src={iconFeature}
         alt="Chat Icon"

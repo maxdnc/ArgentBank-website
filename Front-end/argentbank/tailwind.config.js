@@ -2,6 +2,12 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    screens: {
+      sm: "720px",
+      md: "920px",
+      lg: "1024px",
+    },
+
     extend: {
       animation: {
         errorShaking: "errorShaking 0.25s ease-in-out",
