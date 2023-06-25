@@ -5,13 +5,14 @@ import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 // import react
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import redux RTK Query
 import { useGetTokenMutation } from "../features/api/apiSlice";
 
 // import redux
 import { useDispatch } from "react-redux";
 import { setLoggedIn } from "../features/auth/authSlice";
+import { useSelector } from "react-redux";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -22,6 +23,14 @@ const SignIn = () => {
 
   // call api
   const [getToken, { isLoading, isError }] = useGetTokenMutation();
+
+  // if connected
+  const token = useSelector((state) => state.auth.isLoggedIn);
+  useEffect(() => {
+    if (token) {
+      navigate("/users");
+    }
+  }, [token, navigate]);
 
   const dispatch = useDispatch();
 

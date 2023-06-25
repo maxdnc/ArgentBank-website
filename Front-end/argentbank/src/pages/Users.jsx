@@ -1,13 +1,24 @@
 // component
 import TransactionItem from "../components/TransactionItem";
 import ChangeUserName from "../components/ChangeUserName";
+// router
+import { useNavigate } from "react-router-dom";
+
 // redux
 import { useSelector } from "react-redux";
-import { usePostProfileMutation } from "../features/api/apiSlice";
+// react
+import { useEffect } from "react";
 
 const Users = () => {
   const userProfile = useSelector((state) => state.userProfile);
+  const token = useSelector((state) => state.auth.isLoggedIn);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!token) {
+      navigate("/");
+    }
+  }, [token, navigate]);
 
   return (
     <div className=" bg-tertiary py-8">

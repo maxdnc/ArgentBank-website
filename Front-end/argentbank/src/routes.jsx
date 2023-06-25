@@ -6,6 +6,7 @@ import MainLayout from "./layout/MainLayout";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import Users from "./pages/Users";
+import Error from "./pages/Error";
 
 function Routes() {
   const routes = [
@@ -16,6 +17,7 @@ function Routes() {
         { index: true, element: <Home /> },
         { path: "/signin", element: <SignIn /> },
         { path: "/users", element: <Users /> },
+        { path: "*", element: <Error /> },
       ],
     },
   ];
