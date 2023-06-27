@@ -6,7 +6,7 @@ import iconChat from "../assets/icon-chat.png";
 import iconMoney from "../assets/icon-money.png";
 import iconSecurity from "../assets/icon-security.png";
 // banner
-import bannerImg from "../assets/bank-tree.jpeg";
+import bannerImg from "../assets/bank-tree.jpg";
 
 const Home = () => {
   return (
