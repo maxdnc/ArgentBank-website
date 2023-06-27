@@ -16,7 +16,7 @@ const Users = () => {
 
   useEffect(() => {
     if (!token) {
-      navigate("/");
+      navigate("/signin");
     }
   }, [token, navigate]);
 

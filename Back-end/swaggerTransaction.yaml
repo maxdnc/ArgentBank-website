@@ -1,0 +1,169 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: Transaction Management API
+paths:
+  /transactions:
+    get:
+      summary: Get all transactions for the current month
+      security:
+        - BearerAuth: []
+      description: Returns a list of all transactions made by the user for the current month.
+      responses:
+        200:
+          description: Success - Retrieved list of transactions
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Transaction"
+        401:
+          description: Unauthorized - Invalid token
+        403:
+          description: Forbiden
+        500:
+          description: Internal Server Error
+    post:
+      summary: Add a new transaction
+      security:
+        - BearerAuth: []
+      description: Adds a new transaction to the user's transaction list.
+      parameters:
+        - name: transaction
+          in: body
+          description: Object representing the new transaction
+          required: true
+          schema:
+            $ref: "#/definitions/Transaction"
+      responses:
+        200:
+          description: Success - Transaction successfully added
+        400:
+          description: Bad Request - Data validation error
+        401:
+          description: Unauthorized - Invalid token
+        403:
+          description: Forbiden
+        500:
+          description: Internal Server Error
+  /transactions/{transactionId}:
+    get:
+      summary: Get details of a transaction
+      security:
+        - BearerAuth: []
+      description: Returns the details of a specific transaction identified by {transactionId}.
+      parameters:
+        - name: transactionId
+          in: path
+          description: ID of the transaction to retrieve details
+          required: true
+          type: string
+      responses:
+        200:
+          description: Success - Retrieved transaction details
+          schema:
+            $ref: "#/definitions/Transaction"
+        401:
+          description: Unauthorized - Invalid token
+        403:
+          description: Forbiden
+        404:
+          description: Transaction not found - Invalid transaction ID
+        500:
+          description: Internal Server Error
+    put:
+      summary: Update information of a transaction
+      security:
+        - BearerAuth: []
+      description: Updates the information of a specific transaction identified by {transactionId}.
+      parameters:
+        - name: transactionId
+          in: path
+          description: ID of the transaction to update
+          required: true
+          type: string
+        - name: transaction
+          in: body
+          description: Object representing the new transaction information
+          required: true
+          schema:
+            $ref: "#/definitions/TransactionUpdate"
+      responses:
+        200:
+          description: Success - Transaction successfully updated
+        400:
+          description: Bad Request - Data validation error
+        401:
+          description: Unauthorized - Invalid token
+        403:
+          description: Forbiden
+        404:
+          description: Transaction not found - Invalid transaction ID
+        500:
+          description: Internal Server Error
+    delete:
+      summary: Delete a transaction
+      security:
+        - BearerAuth: []
+      description: Deletes a specific transaction identified by {transactionId}.
+      parameters:
+        - name: transactionId
+          in: path
+          description: ID of the transaction to delete
+          required: true
+          type: string
+      responses:
+        200:
+          description: Success - Transaction successfully deleted
+        401:
+          description: Unauthorized - Invalid token
+        403:
+          description: Forbiden
+        404:
+          description: Transaction not found - Invalid transaction ID
+        500:
+          description: Internal Server Error
+
+securityDefinitions:
+  BearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+
+definitions:
+  TransactionUpdate:
+    type: object
+    properties:
+      category:
+        type: string
+        description: Category of the transaction
+      note:
+        type: string
+        description: Additional note for the transaction
+  Transaction:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Transaction ID
+      date:
+        type: string
+        format: date-time
+        description: Transaction date
+      amount:
+        type: number
+        description: Transaction amount
+      description:
+        type: string
+        description: Description
+      balance:
+        type: number
+        description: Balance after the transaction
+      transactionType:
+        type: string
+        description: Type of the transaction
+      category:
+        type: string
+        description: Category of the transaction
+      note:
+        type: string
+        description: Additional note for the transaction
