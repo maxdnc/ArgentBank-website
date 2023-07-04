@@ -100,28 +100,6 @@ paths:
           description: Transaction not found - Invalid transaction ID
         500:
           description: Internal Server Error
-    delete:
-      summary: Delete a transaction
-      security:
-        - BearerAuth: []
-      description: Deletes a specific transaction identified by {transactionId}.
-      parameters:
-        - name: transactionId
-          in: path
-          description: ID of the transaction to delete
-          required: true
-          type: string
-      responses:
-        200:
-          description: Success - Transaction successfully deleted
-        401:
-          description: Unauthorized - Invalid token
-        403:
-          description: Forbiden
-        404:
-          description: Transaction not found - Invalid transaction ID
-        500:
-          description: Internal Server Error
 
 securityDefinitions:
   BearerAuth:
