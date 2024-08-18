@@ -1,13 +1,13 @@
 // component
-import TransactionItem from "../components/TransactionItem";
-import ChangeUserName from "../components/ChangeUserName";
+import TransactionItem from '../components/TransactionItem';
+import ChangeUserName from '../components/ChangeUserName';
 // router
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 // redux
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 // react
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 const Users = () => {
   const userProfile = useSelector((state) => state.userProfile);
@@ -16,7 +16,7 @@ const Users = () => {
 
   useEffect(() => {
     if (!token) {
-      navigate("/signin");
+      navigate('/signin');
     }
   }, [token, navigate]);
 
@@ -27,7 +27,7 @@ const Users = () => {
           Welcome back
         </h2>
         <p className="text-center text-[2em] font-semibold text-white">
-          {userProfile.firstName} {userProfile.lastName} !
+          {userProfile?.firstName} {userProfile?.lastName} !
         </p>
         <ChangeUserName />
       </section>
