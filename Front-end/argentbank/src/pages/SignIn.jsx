@@ -13,6 +13,7 @@ import { useGetTokenMutation } from '../features/api/apiSlice';
 import { useDispatch } from 'react-redux';
 import { setLoggedIn } from '../features/auth/authSlice';
 import { useSelector } from 'react-redux';
+import PrimaryButton from '../components/PrimaryButton';
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -118,10 +119,11 @@ const SignIn = () => {
               Remember me
             </label>
           </div>
-
-          <button className="mt-4 w-full border-secondary bg-secondary p-[8px] text-[1.1rem] font-semibold text-white underline hover:bg-secondary/80">
-            {isLoading ? 'Loading...' : 'Sign In'}
-          </button>
+          <PrimaryButton
+            label={isLoading ? 'Loading...' : 'Sign In'}
+            type={'submit'}
+            className={'mt-4 w-full underline'}
+          />
         </form>
       </section>
     </div>
