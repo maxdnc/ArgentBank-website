@@ -1,25 +1,25 @@
 // import font
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 // import react-router-dom
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 // import react
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 // import redux RTK Query
-import { useGetTokenMutation } from "../features/api/apiSlice";
+import { useGetTokenMutation } from '../features/api/apiSlice';
 
 // import redux
-import { useDispatch } from "react-redux";
-import { setLoggedIn } from "../features/auth/authSlice";
-import { useSelector } from "react-redux";
+import { useDispatch } from 'react-redux';
+import { setLoggedIn } from '../features/auth/authSlice';
+import { useSelector } from 'react-redux';
 
 const SignIn = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [shakingAnimation, setShakingAnimation] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   // call api
   const [getToken, { isLoading, isError }] = useGetTokenMutation();
@@ -28,7 +28,7 @@ const SignIn = () => {
   const token = useSelector((state) => state.auth.isLoggedIn);
   useEffect(() => {
     if (token) {
-      navigate("/users");
+      navigate('/users');
     }
   }, [token, navigate]);
 
@@ -38,12 +38,12 @@ const SignIn = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     getToken({ email, password })
-      .unwrap() // Récupère le résultat du token de la promesse
+      .unwrap() // Récupère le résultat
       .then((data) => {
         const token = data.body.token;
-        setErrorMessage("");
+        setErrorMessage('');
         dispatch(setLoggedIn(token));
-        navigate("/users");
+        navigate('/users');
       })
       .catch((error) => {
         setShakingAnimation(true);
@@ -67,7 +67,7 @@ const SignIn = () => {
     <div className="flex min-h-[80vh] flex-1 flex-col items-center bg-tertiary ">
       <section
         className={`mt-12 box-border flex max-w-[300px]  flex-col items-center gap-4 bg-white p-8 ${
-          shakingAnimation ? "animate-errorShaking" : ""
+          shakingAnimation ? 'animate-errorShaking' : ''
         } `}
       >
         <FontAwesomeIcon icon={faCircleUser} />
@@ -78,7 +78,7 @@ const SignIn = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
-              className={`font-bold ${isError ? "text-red-400" : ""}`}
+              className={`font-bold ${isError ? 'text-red-400' : ''}`}
               htmlFor="username"
             >
               Username
@@ -87,7 +87,7 @@ const SignIn = () => {
               type="text"
               id="username"
               className={`w-full border-[1px] border-gray-500 p-[5px] text-[1.2rem] ${
-                isError ? "border-red-400 " : ""
+                isError ? 'border-red-400 ' : ''
               }`}
               onChange={handleEmailInput}
               value={email}
@@ -96,7 +96,7 @@ const SignIn = () => {
           </div>
           <div className="mb-4">
             <label
-              className={`font-bold ${isError ? "text-red-400" : ""}`}
+              className={`font-bold ${isError ? 'text-red-400' : ''}`}
               htmlFor="password"
             >
               Password
@@ -105,7 +105,7 @@ const SignIn = () => {
               type="password"
               id="password"
               className={`w-full border-[1px] border-gray-500 p-[5px] text-[1.2rem] ${
-                isError ? "border-red-400 " : ""
+                isError ? 'border-red-400 ' : ''
               }`}
               onChange={handlePasswordInput}
               value={password}
@@ -120,7 +120,7 @@ const SignIn = () => {
           </div>
 
           <button className="mt-4 w-full border-secondary bg-secondary p-[8px] text-[1.1rem] font-semibold text-white underline hover:bg-secondary/80">
-            {isLoading ? "Loading..." : "Sign In"}
+            {isLoading ? 'Loading...' : 'Sign In'}
           </button>
         </form>
       </section>
