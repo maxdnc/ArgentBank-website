@@ -7,6 +7,7 @@ import {
   usePutNewUserNameMutation,
   usePostProfileMutation,
 } from '../features/api/apiSlice';
+import PrimaryButton from './PrimaryButton';
 
 const ChangeUserName = () => {
   const token = useSelector((state) => state.auth.isLoggedIn);
@@ -109,30 +110,29 @@ const ChangeUserName = () => {
             {errorMessage}
           </p>
           <div className="flex w-full flex-row items-center justify-center gap-4">
-            <button
+            <PrimaryButton
+              label="Save"
               type="submit"
-              className="w-full border-2 border-b-green-800 border-l-secondary border-r-green-800 border-t-secondary bg-secondary p-[10px] text-sm font-bold text-white duration-150 ease-in-out hover:border-b-secondary hover:border-l-green-800 hover:border-r-secondary hover:border-t-green-800"
-            >
-              Save
-            </button>
-
-            <button
-              type="button"
-              className="w-full border-2 border-b-green-800 border-l-secondary border-r-green-800 border-t-secondary bg-secondary p-[10px] text-sm font-bold text-white duration-150 ease-in-out hover:border-b-secondary hover:border-l-green-800 hover:border-r-secondary hover:border-t-green-800"
+              buttonStyle="border"
+              className="w-full"
+            />
+            <PrimaryButton
+              label="Cancel"
               onClick={() => setEditName(false)}
-            >
-              Cancel
-            </button>
+              buttonStyle="border"
+              className="w-full"
+              type={'button'}
+            />
           </div>
         </form>
       )}
       {!editName && (
-        <button
-          className="mt-4 border-2 border-b-green-800 border-l-secondary border-r-green-800 border-t-secondary bg-secondary p-[10px] text-sm font-bold text-white duration-150 ease-in-out hover:border-b-secondary hover:border-l-green-800 hover:border-r-secondary hover:border-t-green-800"
+        <PrimaryButton
+          label="Edit Name"
           onClick={() => setEditName(true)}
-        >
-          Edit Name
-        </button>
+          className={'mt-4'}
+          buttonStyle="border"
+        />
       )}
     </>
   );
