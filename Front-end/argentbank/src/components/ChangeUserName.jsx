@@ -1,20 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 // redux
-import { useSelector, useDispatch } from "react-redux";
-import { setUserProfile } from "../features/auth/userProfileSlice";
+import { useSelector, useDispatch } from 'react-redux';
+import { setUserProfile } from '../features/auth/userProfileSlice';
 // api slice redux
 import {
   usePutNewUserNameMutation,
   usePostProfileMutation,
-} from "../features/api/apiSlice";
+} from '../features/api/apiSlice';
 
 const ChangeUserName = () => {
   const token = useSelector((state) => state.auth.isLoggedIn);
   const [editName, setEditName] = useState(false);
   const userProfile = useSelector((state) => state.userProfile);
-  const [newUserName, setNewUserName] = useState("");
+  const [newUserName, setNewUserName] = useState('');
   const [postProfile] = usePostProfileMutation();
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   const dispatch = useDispatch();
 
@@ -29,21 +29,20 @@ const ChangeUserName = () => {
           setNewUserName(userProfile.userName);
         });
     }
-  }, [userProfile.userName]);
+  }, [dispatch, postProfile, token, userProfile.userName]);
 
   const handleChange = (e) => {
     setNewUserName(e.target.value);
-    console.log(newUserName);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (newUserName.length <= 3) {
-      setErrorMessage("Username must be at least 4 characters long");
+      setErrorMessage('Username must be at least 4 characters long');
       return;
     } else {
-      setErrorMessage("");
+      setErrorMessage('');
     }
 
     setEditName(false);
