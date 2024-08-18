@@ -8,6 +8,7 @@ import {
   usePostProfileMutation,
 } from '../features/api/apiSlice';
 import PrimaryButton from './PrimaryButton';
+import InputField from './InputField';
 
 const ChangeUserName = () => {
   const token = useSelector((state) => state.auth.isLoggedIn);
@@ -62,6 +63,11 @@ const ChangeUserName = () => {
     });
   };
 
+  const handleCancel = () => {
+    setEditName(false);
+    setNewUserName(userProfile.userName);
+  };
+
   return (
     <>
       {editName && (
@@ -69,43 +75,25 @@ const ChangeUserName = () => {
           onSubmit={handleSubmit}
           className="flex w-[300px] flex-col items-center justify-center gap-4"
         >
-          <div className="flex flex-col items-center justify-center gap-1">
-            <label className="font-bold text-white" htmlFor="firstName">
-              First Name
-            </label>
-            <input
-              type="text"
-              id="firstName"
-              className="w-full border-[1px] border-gray-500 bg-gray-300 p-[5px] text-[1.2rem]"
-              value={userProfile.firstName}
-              readOnly
-            />
-          </div>
-          <div className="flex flex-col items-center justify-center gap-1">
-            <label className="font-bold text-white" htmlFor="lastName">
-              Last Name
-            </label>
-            <input
-              type="text"
-              id="lastName"
-              className="w-full border-[1px] border-gray-500 bg-gray-300 p-[5px] text-[1.2rem]"
-              value={userProfile.lastName}
-              readOnly
-            />
-          </div>
-          <div className="flex flex-col items-center justify-center gap-1">
-            <label className="font-bold text-white" htmlFor="userName">
-              Username
-            </label>
-            <input
-              type="text"
-              id="userName"
-              className="w-full border-[1px] border-gray-500 p-[5px] text-[1.2rem]"
-              value={newUserName}
-              onChange={handleChange}
-              required
-            />
-          </div>
+          <InputField
+            label="First Name"
+            id="firstName"
+            value={userProfile.firstName}
+            readOnly
+          />
+          <InputField
+            label="Last Name"
+            id="lastName"
+            value={userProfile.lastName}
+            readOnly
+          />
+          <InputField
+            label="Username"
+            id="userName"
+            value={newUserName}
+            onChange={handleChange}
+            readOnly={false}
+          />
           <p className="text-center text-[0.9rem] font-light text-red-500">
             {errorMessage}
           </p>
@@ -118,7 +106,7 @@ const ChangeUserName = () => {
             />
             <PrimaryButton
               label="Cancel"
-              onClick={() => setEditName(false)}
+              onClick={handleCancel}
               buttonStyle="border"
               className="w-full"
               type={'button'}
