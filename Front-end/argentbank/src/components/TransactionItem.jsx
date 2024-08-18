@@ -1,4 +1,5 @@
 import { formatCurrency } from '../utils/formatCurrency';
+import PrimaryButton from './PrimaryButton';
 
 const TransactionItem = ({ operation, argent, balance }) => {
   return (
@@ -12,9 +13,11 @@ const TransactionItem = ({ operation, argent, balance }) => {
           <p className="font-light">{balance}</p>
         </div>
         <div>
-          <button className=" w-full border-2 border-b-green-800 border-l-secondary border-r-green-800 border-t-secondary bg-secondary p-[8px] text-[1.1rem] font-bold text-white duration-150 ease-in-out hover:border-b-secondary hover:border-l-green-800 hover:border-r-secondary hover:border-t-green-800 sm:px-6">
-            View transactions
-          </button>
+          <PrimaryButton
+            label="View transactions"
+            buttonStyle="borderSecondary"
+            className={'w-full'}
+          />
         </div>
       </div>
     </section>
