@@ -1,22 +1,22 @@
 // react-router-dom
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 // asset
-import logoArgentBank from "../assets/argentBankLogo.png";
+import logoArgentBank from '../assets/argentBankLogo.png';
 // fontawesome
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCircleUser,
   faArrowRightFromBracket,
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
 
 // react
-import { useEffect } from "react";
+import { useEffect } from 'react';
 //redux
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
 // redux action
-import { setLoggedIn, setLoggedOut } from "../features/auth/authSlice";
-import { setUserProfile } from "../features/auth/userProfileSlice";
-import { usePostProfileMutation } from "../features/api/apiSlice";
+import { setLoggedOut } from '../features/auth/authSlice';
+import { setUserProfile } from '../features/auth/userProfileSlice';
+import { usePostProfileMutation } from '../features/api/apiSlice';
 
 const Head = () => {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const Head = () => {
           dispatch(setUserProfile(data.body));
         });
     }
-  }, [token]);
+  }, [dispatch, postProfile, token]);
 
   const handleLogout = () => {
     dispatch(setLoggedOut());
@@ -59,8 +59,8 @@ const Head = () => {
                 to="/users"
                 className="mr-4 whitespace-nowrap font-semibold hover:underline"
               >
-                <FontAwesomeIcon icon={faCircleUser} className="mr-2" />{" "}
-                {userProfile.userName}
+                <FontAwesomeIcon icon={faCircleUser} className="mr-2" />{' '}
+                {userProfile?.userName}
               </Link>
               <Link
                 to="/"
