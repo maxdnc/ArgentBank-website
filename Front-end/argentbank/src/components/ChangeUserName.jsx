@@ -1,41 +1,37 @@
 import { useState, useEffect } from 'react';
-// redux
 import { useSelector, useDispatch } from 'react-redux';
 import { setUserProfile } from '../features/auth/userProfileSlice';
-// api slice redux
 import {
-  usePutNewUserNameMutation,
   usePostProfileMutation,
+  usePutNewUserNameMutation,
 } from '../features/api/apiSlice';
 import PrimaryButton from './PrimaryButton';
 import InputField from './InputField';
 
 const ChangeUserName = () => {
+  const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.isLoggedIn);
-  const [editName, setEditName] = useState(false);
-  const userProfile = useSelector((state) => state.userProfile);
-  const [newUserName, setNewUserName] = useState('');
-  const [postProfile] = usePostProfileMutation();
+  const { firstName, lastName, userName } = useSelector(
+    (state) => state.userProfile
+  );
+
+  const [editMode, setEditMode] = useState(false);
+  const [newUserName, setNewUserName] = useState(userName);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const dispatch = useDispatch();
-
+  const [postProfile] = usePostProfileMutation();
   const [putNewUserName] = usePutNewUserNameMutation();
 
   useEffect(() => {
-    if (userProfile.userName) {
+    if (userName) {
       postProfile(token)
         .unwrap()
         .then((data) => {
           dispatch(setUserProfile(data.body));
-          setNewUserName(userProfile.userName);
+          setNewUserName(data.body.userName);
         });
     }
-  }, [dispatch, postProfile, token, userProfile.userName]);
-
-  const handleChange = (e) => {
-    setNewUserName(e.target.value);
-  };
+  }, [dispatch, postProfile, token, userName]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,86 +39,74 @@ const ChangeUserName = () => {
     if (newUserName.length <= 3) {
       setErrorMessage('Username must be at least 4 characters long');
       return;
-    } else {
-      setErrorMessage('');
     }
 
-    setEditName(false);
-    const user = {
-      token: token,
-      userName: newUserName,
-    };
+    setErrorMessage('');
+    setEditMode(false);
 
-    putNewUserName(user).then(() => {
-      postProfile(token)
-        .unwrap()
-        .then((data) => {
-          dispatch(setUserProfile(data.body));
-          setNewUserName(userProfile.userName);
-        });
-    });
+    putNewUserName({ token, userName: newUserName })
+      .then(() => postProfile(token).unwrap())
+      .then((data) => dispatch(setUserProfile(data.body)))
+      .catch((error) => console.error('Failed to update username:', error));
   };
 
   const handleCancel = () => {
-    setEditName(false);
-    setNewUserName(userProfile.userName);
+    setEditMode(false);
+    setNewUserName(userName);
+    setErrorMessage('');
   };
 
+  if (!editMode) {
+    return (
+      <PrimaryButton
+        label="Edit Name"
+        onClick={() => setEditMode(true)}
+        className="mt-4"
+        buttonStyle="border"
+      />
+    );
+  }
+
   return (
-    <>
-      {editName && (
-        <form
-          onSubmit={handleSubmit}
-          className="flex w-[300px] flex-col items-center justify-center gap-4"
-        >
-          <InputField
-            label="First Name"
-            id="firstName"
-            value={userProfile.firstName}
-            readOnly
-          />
-          <InputField
-            label="Last Name"
-            id="lastName"
-            value={userProfile.lastName}
-            readOnly
-          />
-          <InputField
-            label="Username"
-            id="userName"
-            value={newUserName}
-            onChange={handleChange}
-            readOnly={false}
-          />
-          <p className="text-center text-[0.9rem] font-light text-red-500">
-            {errorMessage}
-          </p>
-          <div className="flex w-full flex-row items-center justify-center gap-4">
-            <PrimaryButton
-              label="Save"
-              type="submit"
-              buttonStyle="border"
-              className="w-full"
-            />
-            <PrimaryButton
-              label="Cancel"
-              onClick={handleCancel}
-              buttonStyle="border"
-              className="w-full"
-              type={'button'}
-            />
-          </div>
-        </form>
+    <form
+      onSubmit={handleSubmit}
+      className="flex w-[300px] flex-col items-center justify-center gap-4"
+    >
+      <InputField
+        label="First Name"
+        id="firstName"
+        value={firstName}
+        readOnly
+      />
+      <InputField label="Last Name" id="lastName" value={lastName} readOnly />
+      <InputField
+        label="Username"
+        id="userName"
+        value={newUserName}
+        onChange={(e) => setNewUserName(e.target.value)}
+      />
+      {errorMessage && (
+        <p className="text-center text-[0.9rem] font-light text-red-500">
+          {errorMessage}
+        </p>
       )}
-      {!editName && (
+      <div className="flex w-full flex-row items-center justify-center gap-4">
         <PrimaryButton
-          label="Edit Name"
-          onClick={() => setEditName(true)}
-          className={'mt-4'}
+          label="Save"
+          type="submit"
           buttonStyle="border"
+          className="w-full"
         />
-      )}
-    </>
+        <PrimaryButton
+          label="Cancel"
+          onClick={handleCancel}
+          buttonStyle="border"
+          className="w-full"
+          type="button"
+        />
+      </div>
+    </form>
   );
 };
+
 export default ChangeUserName;
