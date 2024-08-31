@@ -51,7 +51,9 @@ const SignIn = () => {
         setTimeout(() => {
           setShakingAnimation(false);
         }, 500);
-        setErrorMessage(error.data.message);
+        setErrorMessage(
+          error.data?.message || 'An error occurred, please try again later'
+        );
       });
   };
 
