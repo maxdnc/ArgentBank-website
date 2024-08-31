@@ -11,7 +11,7 @@ import { useGetTokenMutation } from '../features/api/apiSlice';
 
 // import redux
 import { useDispatch } from 'react-redux';
-import { setLoggedIn } from '../features/auth/authSlice';
+import { selectIsLoggedIn, setLoggedIn } from '../features/auth/authSlice';
 import { useSelector } from 'react-redux';
 import PrimaryButton from '../components/PrimaryButton';
 
@@ -26,7 +26,7 @@ const SignIn = () => {
   const [getToken, { isLoading, isError }] = useGetTokenMutation();
 
   // if connected
-  const token = useSelector((state) => state.auth.isLoggedIn);
+  const token = useSelector(selectIsLoggedIn);
   useEffect(() => {
     if (token) {
       navigate('/users');

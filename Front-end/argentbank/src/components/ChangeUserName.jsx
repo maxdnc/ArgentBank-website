@@ -11,10 +11,11 @@ import {
 } from '../features/api/apiSlice';
 import PrimaryButton from './PrimaryButton';
 import InputField from './InputField';
+import { selectIsLoggedIn } from '../features/auth/authSlice';
 
 const ChangeUserName = () => {
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.auth.isLoggedIn);
+  const token = useSelector(selectIsLoggedIn);
   const { firstName, lastName } = useSelector(selectUserProfile);
   const userName = useSelector(selectUserName);
 

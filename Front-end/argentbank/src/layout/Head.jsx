@@ -14,14 +14,17 @@ import { useEffect } from 'react';
 //redux
 import { useSelector, useDispatch } from 'react-redux';
 // redux action
-import { setLoggedOut } from '../features/auth/authSlice';
-import { setUserProfile } from '../features/auth/userProfileSlice';
+import { selectIsLoggedIn, setLoggedOut } from '../features/auth/authSlice';
+import {
+  selectUserProfile,
+  setUserProfile,
+} from '../features/auth/userProfileSlice';
 import { usePostProfileMutation } from '../features/api/apiSlice';
 
 const Head = () => {
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.auth.isLoggedIn);
-  const userProfile = useSelector((state) => state.userProfile);
+  const token = useSelector(selectIsLoggedIn);
+  const userProfile = useSelector(selectUserProfile);
   const [postProfile] = usePostProfileMutation();
 
   useEffect(() => {

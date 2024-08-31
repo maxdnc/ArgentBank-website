@@ -8,10 +8,12 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 // react
 import { useEffect } from 'react';
+import { selectIsLoggedIn } from '../features/auth/authSlice';
+import { selectUserProfile } from '../features/auth/userProfileSlice';
 
 const Users = () => {
-  const userProfile = useSelector((state) => state.userProfile);
-  const token = useSelector((state) => state.auth.isLoggedIn);
+  const userProfile = useSelector(selectUserProfile);
+  const token = useSelector(selectIsLoggedIn);
   const navigate = useNavigate();
 
   useEffect(() => {
