@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setUserProfile } from '../features/auth/userProfileSlice';
+import {
+  updateUserName,
+  selectUserProfile,
+  selectUserName,
+} from '../features/auth/userProfileSlice';
 import {
   usePostProfileMutation,
   usePutNewUserNameMutation,
@@ -11,9 +15,8 @@ import InputField from './InputField';
 const ChangeUserName = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.isLoggedIn);
-  const { firstName, lastName, userName } = useSelector(
-    (state) => state.userProfile
-  );
+  const { firstName, lastName } = useSelector(selectUserProfile);
+  const userName = useSelector(selectUserName);
 
   const [editMode, setEditMode] = useState(false);
   const [tempUserName, setTempUserName] = useState(userName);
@@ -36,7 +39,7 @@ const ChangeUserName = () => {
     putNewUserName({ token, userName: tempUserName })
       .then(() => postProfile(token).unwrap())
       .then((data) => {
-        dispatch(setUserProfile(data.body));
+        dispatch(updateUserName(data.body.userName));
         setTempUserName(data.body.userName);
       })
       .catch((error) => {
