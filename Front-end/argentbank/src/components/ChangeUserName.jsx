@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUserProfile } from '../features/auth/userProfileSlice';
 import {
@@ -16,27 +16,16 @@ const ChangeUserName = () => {
   );
 
   const [editMode, setEditMode] = useState(false);
-  const [newUserName, setNewUserName] = useState(userName);
+  const [tempUserName, setTempUserName] = useState(userName);
   const [errorMessage, setErrorMessage] = useState('');
 
   const [postProfile] = usePostProfileMutation();
   const [putNewUserName] = usePutNewUserNameMutation();
 
-  useEffect(() => {
-    if (userName) {
-      postProfile(token)
-        .unwrap()
-        .then((data) => {
-          dispatch(setUserProfile(data.body));
-          setNewUserName(data.body.userName);
-        });
-    }
-  }, [dispatch, postProfile, token, userName]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (newUserName.length <= 3) {
+    if (!tempUserName || tempUserName.length <= 3) {
       setErrorMessage('Username must be at least 4 characters long');
       return;
     }
@@ -44,23 +33,38 @@ const ChangeUserName = () => {
     setErrorMessage('');
     setEditMode(false);
 
-    putNewUserName({ token, userName: newUserName })
+    putNewUserName({ token, userName: tempUserName })
       .then(() => postProfile(token).unwrap())
-      .then((data) => dispatch(setUserProfile(data.body)))
-      .catch((error) => console.error('Failed to update username:', error));
+      .then((data) => {
+        dispatch(setUserProfile(data.body));
+        setTempUserName(data.body.userName);
+      })
+      .catch((error) => {
+        console.error('Failed to update username:', error);
+        setTempUserName(userName);
+      });
+  };
+
+  const handleUsernameChange = (e) => {
+    setTempUserName(e.target.value);
   };
 
   const handleCancel = () => {
     setEditMode(false);
-    setNewUserName(userName);
     setErrorMessage('');
+    setTempUserName(userName);
+  };
+
+  const startEditing = () => {
+    setEditMode(true);
+    setTempUserName(userName);
   };
 
   if (!editMode) {
     return (
       <PrimaryButton
         label="Edit Name"
-        onClick={() => setEditMode(true)}
+        onClick={startEditing}
         className="mt-4"
         buttonStyle="border"
       />
@@ -82,8 +86,8 @@ const ChangeUserName = () => {
       <InputField
         label="Username"
         id="userName"
-        value={newUserName}
-        onChange={(e) => setNewUserName(e.target.value)}
+        value={tempUserName}
+        onChange={handleUsernameChange}
       />
       {errorMessage && (
         <p className="text-center text-[0.9rem] font-light text-red-500">
