@@ -16,7 +16,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // redux action
 import { selectIsLoggedIn, setLoggedOut } from '../features/auth/authSlice';
 import {
-  selectUserProfile,
+  selectUserName,
   setUserProfile,
 } from '../features/auth/userProfileSlice';
 import { usePostProfileMutation } from '../features/api/apiSlice';
@@ -24,7 +24,7 @@ import { usePostProfileMutation } from '../features/api/apiSlice';
 const Head = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectIsLoggedIn);
-  const userProfile = useSelector(selectUserProfile);
+  const userName = useSelector(selectUserName);
   const [postProfile] = usePostProfileMutation();
 
   useEffect(() => {
@@ -63,7 +63,7 @@ const Head = () => {
                 className="mr-4 whitespace-nowrap font-semibold hover:underline"
               >
                 <FontAwesomeIcon icon={faCircleUser} className="mr-2" />{' '}
-                {userProfile?.userName}
+                {userName}
               </Link>
               <Link
                 to="/"
